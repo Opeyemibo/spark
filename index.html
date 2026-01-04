@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Spark Demo</title>
+    <style>
+        /* Button styling */
+        .spark-button {
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
+            border: none;
+            background: #111;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .spark-button:hover {
+            background: #333;
+        }
+        .spark-button--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .spark-link {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .spark-link:hover {
+            text-decoration: underline;
+        }
+        header {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f3f3f3;
+        }
+        main { padding: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <spark-button action="route" target="#/">Home</spark-button>
+        <spark-button action="route" target="#/about">About</spark-button>
+        <spark-button action="route" target="#/contact">Contact</spark-button>
+    </header>
+
+    <main>
+        <div id="home"></div>
+        <div id="about"></div>
+        <div id="contact"></div>
+    </main>
+
+    <script src="spark.js"></script>
+
+    <!-- Home page -->
+    <script type="text/spark" mount-id="home">
+    component App {
+        route = "#/"
+
+        state counter = 0
+
+        view {
+            <h1>Home</h1>
+            <p>Welcome to Spark!</p>
+            <p>Counter: ${counter}</p>
+            <button onclick="window.$activeApp.state.counter++">+</button>
+            <spark-button action="route" target="#/about">Go to About</spark-button>
+        }
+    }
+    </script>
+
+    <!-- About page -->
+    <script type="text/spark" mount-id="about">
+    component App {
+        route = "#/about"
+
+        view {
+            <h1>About</h1>
+            <p>This is the about page built with Spark.</p>
+            <spark-button action="back" fallback="#/">Back</spark-button>
+        }
+    }
+    </script>
+
+    <!-- Contact page -->
+    <script type="text/spark" mount-id="contact">
+    component App {
+        route = "#/contact"
+
+        view {
+            <h1>Contact</h1>
+            <p>Reach us anytime.</p>
+            <spark-link is="spark-link" action="navigate" href="https://example.com">
+                External link
+            </spark-link>
+        }
+    }
+    </script>
+</body>
+</html>
